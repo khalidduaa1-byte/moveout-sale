@@ -45,6 +45,11 @@
   .price .u{font-size:12px;color:var(--soft);font-weight:600}
   .viewlink{font-size:12px;font-weight:600;color:var(--brass-d);text-decoration:none;margin-top:2px}
   .viewlink:hover{text-decoration:underline}
+  .cardwa{display:inline-flex;align-items:center;justify-content:center;gap:7px;margin-top:10px;
+    background:#1faf54;color:#fff;text-decoration:none;font-weight:600;font-size:13.5px;
+    padding:9px 12px;border-radius:8px;transition:background .15s}
+  .cardwa:hover{background:#1a9a49}
+  .cardwa svg{width:15px;height:15px;fill:currentColor}
   .wabar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;justify-content:center;padding:14px;background:linear-gradient(transparent,rgba(243,239,232,.9) 30%)}
   .wabar a{display:inline-flex;align-items:center;gap:10px;background:#1faf54;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 26px;border-radius:999px;box-shadow:0 10px 26px -8px rgba(31,175,84,.6)}
   .wabar a:hover{background:#1a9a49}
@@ -85,10 +90,12 @@ function render(){
       :`<div class="ph-empty"><span class="nm">${d.name}</span><span class="cs">Photo coming soon</span></div>`;
     const phInner=d.link?`<a class="phlink" href="${d.link}" target="_blank" rel="noopener" title="View on original store">${media}</a>`:media;
     const link=d.link?`<a class="viewlink" href="${d.link}" target="_blank" rel="noopener">View on original store &#8599;</a>`:'';
+    const waItem=`https://wa.me/${WA}?text=`+encodeURIComponent(`Hi! Is the "${d.name}" still available?`);
+    const waBtn=`<a class="cardwa" href="${waItem}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.01c-.25.69-1.44 1.32-1.99 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.62-2.98-1.29-4.92-4.28-5.07-4.48-.15-.2-1.21-1.61-1.21-3.07s.77-2.18 1.04-2.48c.27-.3.59-.37.79-.37.2 0 .39.002.56.01.18.008.42-.07.66.5.25.59.84 2.05.91 2.2.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.3.15.49.22.56.35.07.12.07.72-.18 1.4z"/></svg>I want this</a>`;
     return `<article class="card" style="animation-delay:${i*40}ms">
       <div class="ph">${phInner}<span class="chip">Available</span>${save}</div>
       <div class="body"><span class="room">${d.room}</span><h3 class="name">${d.name}</h3>
-      <p class="desc">${d.desc}</p>${price}${link}</div></article>`;}).join('');
+      <p class="desc">${d.desc}</p>${price}${link}${waBtn}</div></article>`;}).join('');
 }
 document.getElementById('filters').innerHTML=rooms.map(r=>`<button data-r="${r}" aria-pressed="${r==='All'}">${r}</button>`).join('');
 document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
